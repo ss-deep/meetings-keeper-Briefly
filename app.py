@@ -19,6 +19,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "home"
 login_manager.login_message = "Please log in to access this page."
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get((user_id))
+
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 200MB
@@ -26,9 +30,8 @@ ALLOWED_EXTENSIONS = {'mp4', 'mov', 'avi', 'mp3', 'wav'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get((user_id))
+
+###############   View function for User - Login, Logout, Register   #################
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -46,6 +49,7 @@ def home():
             else:
                 flash('Invalid email or password.', 'danger')
         return render_template('login.html', form=form)
+    
 
 @app.route("/logout")
 @login_required
@@ -53,6 +57,7 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -67,11 +72,15 @@ def register():
     else:
         flash('User already exists!', 'danger')
         return render_template('register.html', form=form)
+    
 
 @app.route("/base")
 @login_required
 def base():
     return render_template('base.html')
+
+
+###############   View function to Upload a file   #################
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
@@ -97,12 +106,7 @@ def upload_file():
     return render_template('upload.html',form=form)
 
 
-@app.route('/summary/<filename>')
-@login_required
-def summary(filename):
-    video_to_text_converter(filename)
-    return render_template("summary.html",filename=filename)
-
+###############   View function for Meetings   #################
 
 @app.route('/meetings')
 @login_required
@@ -113,6 +117,15 @@ def meetings():
     return render_template("meetings.html",files=get_files(app.config['UPLOAD_FOLDER']))
 
 
+@app.route('/summary/<filename>')
+@login_required
+def summary(filename):
+    video_to_text_converter(filename)
+    return render_template("summary.html",filename=filename)
+
+
+###############   View function for Projects   #################
+
 @app.route('/projects',methods=["GET","POST"])
 @login_required
 def projects():
@@ -122,12 +135,6 @@ def projects():
         print(f"project name : -----------{project_name}")
     return render_template("projects.html", projects=get_projects())
 
-@app.route('/delete/<project_id>')
-@login_required
-def delete_project(project_id):
-    delete_a_project(project_id)
-    flash('Project Deleted', 'danger')
-    return render_template("projects.html", projects=get_projects())
 
 @app.route('/edit/<project_id>',methods=["POST"])
 @login_required
@@ -136,6 +143,16 @@ def edit_project(project_id):
     update_project(project_id,new_name)
     flash('Project Updated', 'success')
     return render_template("projects.html", projects=get_projects())
+
+
+@app.route('/delete/<project_id>')
+@login_required
+def delete_project(project_id):
+    delete_a_project(project_id)
+    flash('Project Deleted', 'danger')
+    return render_template("projects.html", projects=get_projects())
+
+
 
 
 def get_files(target):

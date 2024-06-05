@@ -183,6 +183,8 @@ body {
   }
   .list-group-checkable .list-group-item {
     cursor: pointer;
+    /* font-size: 2rem ; */
+
   }
   .list-group-item-check {
     position: absolute;
@@ -199,9 +201,9 @@ body {
   .dotbtn {
     position: absolute;
     /* top: -100%; */
-    left: 97%;
-    transform: translate(-10%, -90%);
-
+    left: 98%;
+    /* transform: translate(-10%, -90%); */
+    transform: translate(5%, -140%);
     width: 30px ;
     height: 30px ;
     padding: 0 ;

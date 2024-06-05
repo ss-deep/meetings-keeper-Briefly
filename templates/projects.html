@@ -39,7 +39,7 @@
         {% for project in projects %}
         <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id={{project.project_name}} value={{project.project_name}}>
         <label class="list-group-item rounded-3 py-3" for={{project.project_name}}>
-                {{project.project_name}}
+                <h4>{{project.project_name}}</h4>
                 <div class="dropdown">
                     <button class="dotbtn" type="button" data-bs-toggle="dropdown">
                         <svg width="12" height="14" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -54,7 +54,7 @@
                     </ul>
                 </div>
         
-        <span class="d-block small opacity-50 py-3">Project details....</span>
+        <span class="d-block opacity-50 py-3">Project details....</span>
         </label>
         <div class="modal fade" id="updateProject" tabindex="-1">
             <div class="modal-dialog">
