@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block content %}
+<!-- <h1>Hello</h1> -->
+    <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        <div class="form-floating mb-3">
+            {{ form.email(class="form-control", placeholder="name@example.com") }}{{ form.email.label (class="form-label")}} 
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.password(class="form-control", placeholder="Password") }}{{ form.password.label(class="form-label")}} 
+        </div>
+        <hr class="my-4">
+            {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+    </form>
+{% endblock %}

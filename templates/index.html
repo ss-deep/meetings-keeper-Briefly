@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/index.css"/>
+    <title></title>
+
+  </head>
+  <body class="d-flex text-center text-white ">
+    
+  <div class="cover-container d-flex p-3 mx-auto flex-column">
+    <header class="mx-5 my-3 px-4 mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">Briefly</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Log In</a>
+          <a class="nav-link " href="{{url_for('register')}}">Sign Up</a>
+        </nav>
+      </div>
+    </header>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+    <div class="container col-xl-11  px-4 py-5">
+      <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start">
+          <h1 class="display-4 fw-bold lh-1 mb-3">Something goes here....</h1>
+          <p class="col-lg-10 fs-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas et eaque temporibus corrupti veniam enim at, sunt assumenda quis debitis aut doloribus ea dicta id corporis reprehenderit quae blanditiis in.</p>
+        </div>
+        <div class="col-md-10 mx-auto col-lg-5">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      </div>
+    </div>
+      <footer class="mt-auto text-white-50">
+    </footer>
+  
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>  
+
+</body>
+</html>

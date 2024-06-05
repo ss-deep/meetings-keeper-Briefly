@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block heading %}Upload{% endblock %}
+{% block content %}
+<div class="frame">
+	<div class="center">
+        <h6 id="file-name"></h6>
+
+        <div class="dropzone">
+            <form method='POST' enctype='multipart/form-data'>
+                <div class="upload-info">
+                    <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                    <h1>Click to upload a file</h1>
+                </div>
+                {{form.hidden_tag()}}
+                {{form.file(class="upload-input")}}
+                {{form.submit(class="btn px-4")}}</div>
+        </form>	
+	</div>
+</div>
+
+<script>
+    document.getElementById("file").onchange = function() {
+        if (file.value){
+        fileName=file.value.split("\\").pop() //removes C:\fakepath\
+    document.getElementById("file-name").innerHTML=`<div class="alert alert-dismissible fade show" role="alert">
+                                                    <strong>${fileName}</strong>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" onClick="document.querySelector('.upload-info').style.opacity=1;"></button>
+                                                    </div>`;
+    document.querySelector(".upload-info").style.opacity=0
+     } };
+</script>
+{% endblock %}
