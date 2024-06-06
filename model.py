@@ -23,7 +23,7 @@ def connect_to_db(flask_app, db_uri = POSTGRES_URI, echo = True):
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True)
     username = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=False)
@@ -48,8 +48,9 @@ class User(db.Model, UserMixin):
 class Project(db.Model):
     __tablename__ = "projects"
     
-    project_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    project_id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String, nullable=False, unique=True)
+    project_description = db.Column(db.String, nullable=True)
 
     def __repr__(self):
         return f"<Project project_id={self.project_id} project_name={self.project_name}>"
@@ -58,12 +59,12 @@ class Project(db.Model):
 class Meeting(db.Model):
     __tablename__ = "meetings"
     
-    meeting_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    meeting_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False, unique=True)
-    action_item = db.Column(db.Text)
+    # action_item = db.Column(db.Text)
     brief_summary = db.Column(db.Text)
     detail_summary = db.Column(db.Text)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
 
     project = db.relationship("Project", backref="meetings")
 
@@ -72,10 +73,11 @@ class Meeting(db.Model):
 
 
 class UserMeeting(db.Model):
-    __tablename__ = "usermeetings"
+    __tablename__ = "user_meetings"
     
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), primary_key=True)
-    meeting_id = db.Column(db.Integer, db.ForeignKey("meetings.meeting_id"), primary_key=True)
+    user_meetings_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    meeting_id = db.Column(db.Integer, db.ForeignKey("meetings.meeting_id"))
 
     user = db.relationship("User", backref="usermeetings")
     meeting = db.relationship("Meeting", backref="usermeetings")

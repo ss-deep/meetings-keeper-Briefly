@@ -7,7 +7,9 @@ import email_validator
 import os
 from werkzeug.utils import secure_filename
 from text_converter import video_to_text_converter
-from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project
+from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting
+from groq_api import summary_generator
+
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -38,14 +40,14 @@ def allowed_file(filename):
 def home():
     if current_user.is_active:
         print(f"log in : {current_user.email}")
-        return redirect(url_for('base'))
+        return render_template('base.html')
     else:
         form = LoginForm()
         if form.validate_on_submit():
             user = get_user(form.email.data)
             if user and user.check_password(form.password.data):
                 login_user(user)
-                return redirect(url_for('base'))
+                return render_template('base.html')
             else:
                 flash('Invalid email or password.', 'danger')
         return render_template('login.html', form=form)
@@ -83,9 +85,13 @@ def base():
 ###############   View function to Upload a file   #################
 
 @app.route('/upload', methods=['GET', 'POST'])
+# @app.route('/upload')
 @login_required
 def upload_file():
     form = UploadFileForm()
+    # to get project id (passed as arguments) after clicking Add meeting in projects.html
+    project_id=request.args.get('project_id')
+
     if request.method == 'POST':
         if form.validate_on_submit():
             file = form.file.data # First grab the file
@@ -97,31 +103,44 @@ def upload_file():
                 flash('No selected file', 'danger')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
+                filename = secure_filename(file.filename) #secure_filename("My cool movie.mov") converts it to 'My_cool_movie.mov'
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 flash('File successfully uploaded', 'success')
-                return redirect(url_for('summary',filename=filename))
+                title=filename.capitalize()
+                # Convert uploaded file to text
+                transcript = video_to_text_converter(filename)
+                
+                # Call Groq for summary
+                summary=summary_generator(transcript)
+
+                # Call function to insert in database  
+                meeting=create_meeting(title=title , brief_summary=summary, detail_summary=transcript, project_id=project_id)
+
+                return render_template("summary.html",meeting=meeting)
             else:
                 flash('File type not allowed', 'danger')
     return render_template('upload.html',form=form)
-
+    
 
 ###############   View function for Meetings   #################
+
+@app.route('/summary/<meeting>')
+@login_required
+def summary(meeting):
+    # print(f"request.args : -----------{request.args.get('project_id')}") 
+
+    # video_to_text_converter(filename)
+    return render_template("summary.html",meeting=meeting)
+
 
 @app.route('/meetings')
 @login_required
 def meetings():
     files = get_files(app.config['UPLOAD_FOLDER'])
-    for file in files:
-        print(f"files : {file}")
+    # print(f"request.args : -----------{files[0]}") 
+    # for file in files:
+    #     print(f"files : {file}")
     return render_template("meetings.html",files=get_files(app.config['UPLOAD_FOLDER']))
-
-
-@app.route('/summary/<filename>')
-@login_required
-def summary(filename):
-    video_to_text_converter(filename)
-    return render_template("summary.html",filename=filename)
 
 
 ###############   View function for Projects   #################
@@ -131,7 +150,8 @@ def summary(filename):
 def projects():
     if request.method=='POST':
         project_name=request.form.get("project-name")
-        create_project(project_name)
+        project_description=request.form.get("project_description")
+        create_project(project_name,project_description)
         print(f"project name : -----------{project_name}")
     return render_template("projects.html", projects=get_projects())
 
@@ -140,7 +160,8 @@ def projects():
 @login_required
 def edit_project(project_id):
     new_name=request.form.get("project-name")
-    update_project(project_id,new_name)
+    project_description=request.form.get("project_description")
+    update_project(project_id,new_name,project_description)
     flash('Project Updated', 'success')
     return render_template("projects.html", projects=get_projects())
 
@@ -156,13 +177,16 @@ def delete_project(project_id):
 
 
 def get_files(target):
+    files_list=[]
     for file in os.listdir(target):
         path = os.path.join(target, file)
         if os.path.isfile(path):
-            yield (
-                file
-                # os.path.getsize(path)
-            )
+            files_list.append(file)
+            # yield (
+            #     file
+            #     # os.path.getsize(path)
+            # )
+    return files_list
  
 
 if __name__ == "__main__":

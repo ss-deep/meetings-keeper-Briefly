@@ -2,9 +2,7 @@
 {% extends "base.html" %}
 {% block heading %}Summary of meeting{% endblock %}
 {% block content %}
-<h1>Hello</h1>
-{{filename}}
-
-
-
+<!-- <h1>Hello</h1> -->
+<p>{{meeting.title}}</p>
+<p>{{meeting.brief_summary}}</p>
 {% endblock %}
