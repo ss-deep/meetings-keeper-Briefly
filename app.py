@@ -32,7 +32,7 @@ ALLOWED_EXTENSIONS = {'mp4', 'mov', 'avi', 'mp3', 'wav'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+######################################################################################
 ###############   View function for User - Login, Logout, Register   #################
 
 @app.route('/', methods=['GET', 'POST'])
@@ -81,8 +81,15 @@ def register():
 def base():
     return render_template('base.html')
 
-
+####################################################################
 ###############   View function to Upload a file   #################
+###############   View function for Meetings   #####################
+
+@app.route('/meetings')
+@login_required
+def meetings():
+    return render_template("meetings.html",meetings=get_meetings())
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 # @app.route('/upload')
@@ -107,12 +114,12 @@ def upload_file():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 flash('File successfully uploaded', 'success')
                 title=filename.capitalize()
+
                 # Convert uploaded file to text
                 transcript = video_to_text_converter(filename)
-                
                 # Call Groq for summary
                 summary=summary_generator(transcript)
-
+                
                 # Call function to insert in database  
                 meeting=create_meeting(title=title , brief_summary=summary, detail_summary=transcript, project_id=project_id)
 
@@ -122,20 +129,14 @@ def upload_file():
     return render_template('upload.html',form=form)
     
 
-###############   View function for Meetings   #################
-
 @app.route('/summary/<meeting>')
 @login_required
 def summary(meeting):
     return render_template("summary.html",meeting=meeting)
 
 
-@app.route('/meetings')
-@login_required
-def meetings():
-    return render_template("meetings.html",meetings=get_meetings())
 
-
+################################################################
 ###############   View function for Projects   #################
 
 @app.route('/projects',methods=["GET","POST"])
@@ -166,7 +167,8 @@ def delete_project(project_id):
     flash('Project Deleted', 'danger')
     return render_template("projects.html", projects=get_projects())
 
-
+################################################################
+######################   Other function   ######################
 
 
 def get_files(target):
