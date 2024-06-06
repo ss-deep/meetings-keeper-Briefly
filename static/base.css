@@ -198,11 +198,9 @@ body {
 
 /* for three dots */
 
-  .dotbtn {
+  /* .dotbtn {
     position: absolute;
-    /* top: -100%; */
     left: 98%;
-    /* transform: translate(-10%, -90%); */
     transform: translate(5%, -140%);
     width: 30px ;
     height: 30px ;
@@ -223,4 +221,15 @@ body {
   top: 80%;
   left: 55%;
   transform: translate(20%, -50%);
+} */
+
+.trashBtn{
+  position: absolute;
+  left: 95%;
+  transform: translate(5%, -140%);
+  width: 15px ;
+  height: 20px ;
+  /* padding: 0 ; */
+  /* border: none ; */
+  /* background-color: transparent; */
 }
