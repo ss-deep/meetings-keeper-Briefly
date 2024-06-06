@@ -7,7 +7,7 @@ import email_validator
 import os
 from werkzeug.utils import secure_filename
 from text_converter import video_to_text_converter
-from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting
+from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting, get_meetings
 from groq_api import summary_generator
 
 
@@ -127,20 +127,13 @@ def upload_file():
 @app.route('/summary/<meeting>')
 @login_required
 def summary(meeting):
-    # print(f"request.args : -----------{request.args.get('project_id')}") 
-
-    # video_to_text_converter(filename)
     return render_template("summary.html",meeting=meeting)
 
 
 @app.route('/meetings')
 @login_required
 def meetings():
-    files = get_files(app.config['UPLOAD_FOLDER'])
-    # print(f"request.args : -----------{files[0]}") 
-    # for file in files:
-    #     print(f"files : {file}")
-    return render_template("meetings.html",files=get_files(app.config['UPLOAD_FOLDER']))
+    return render_template("meetings.html",meetings=get_meetings())
 
 
 ###############   View function for Projects   #################

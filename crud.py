@@ -51,9 +51,9 @@ def create_meeting(title,brief_summary,detail_summary,project_id):
     db.session.commit()
     return meeting
 
-def get_meeting():
-    
-    pass
+def get_meetings():
+    meeting=Meeting.query.all()
+    return meeting
 
 def update_meeting():
     pass
