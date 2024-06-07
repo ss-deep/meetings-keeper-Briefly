@@ -4,10 +4,59 @@
 {% block content %}
 <!-- <h1>Hello</h1> -->
 
-<ul class="list-group list-group-flush">
+<!-- <ul class="list-group list-group-flush"> -->
+  <ul class="list-group list-group-flush ">
+
   {% for meeting in meetings %}
-    <li class="list-group-item"><a href="">{{meeting.title}}</a></li>
-   {% endfor %}
+    <!-- <li class="list-group-item"><a href="">{{meeting.title | capitalize}}</a></li> -->
+    <!-- <div class="items">
+    <div class="card items py-3 mx-5">
+      <div class="card-body ">
+          <a href="#" class=""> <h6>{{meeting.title | capitalize }}</h6> </a>
+          <span class="trashBtn" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+      </div>
+  </div>              
+  </div>       -->
+  <!-- <div class="items"> -->
+    <!-- <div class=" py-2 mx-5">
+        <div class=" mx-5">
+                <button class="accordion-button " type="button"">
+                    <h6>{{meeting.title | capitalize }}</h6> 
+                    <span class="ms-5 pb-1" data-bs-toggle="modal" data-bs-target="" data-bs-whatever="edit" data-feather="edit"></span>
+                    <span class="ms-2 pb-1" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+                </button>
+        </div>
+    </div> -->
+
+    <li class="list-group-item d-flex justify-content-between align-items-start my-2">
+      <span class="mt-1" data-feather="monitor"></span>
+      <div class=" me-auto">
+        <div class="fw-bolder fs-6 mb-1">{{meeting.title | capitalize }}</div>
+        Something...
+      </div>
+      <span class="" data-bs-toggle="modal" data-bs-target="" data-bs-whatever="edit" data-feather="edit"></span>
+      <span class="" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+    </li>
+
+      <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
+        <!-- <h6>{{meeting.title | capitalize }}
+        <span class="ms-5 pb-1" data-bs-toggle="modal" data-bs-target="" data-bs-whatever="edit" data-feather="edit"></span>
+        <span class="ms-2 pb-1" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+      </h6>  -->
+    <div class="modal fade" id="deleteMeeting{{ meeting.meeting_id }}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-center pt-3">Are you sure you want delete this {{meeting.title | capitalize}} meeting?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href=""> <button type="submit" class="btn btn-primary">Delete</button></a>
+                </div>
+        </div>
+    </div>
+  </div>
+{% endfor %}
   </ul>
   
 {% endblock %}

@@ -33,22 +33,22 @@
 {% endblock %}
 {% block content %}
     {% for project in projects %}
-        <div>
+        <div class="items">
             <div class="accordion py-3" id="accordionExample">
                 <div class="accordion-item ">
                     <p class="accordion-header ">
                         <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#{{project.project_name}}">
-                            <h6>{{project.project_name}}</h6> 
-                            <span class="ms-5 pb-1" data-bs-toggle="modal" data-bs-target="#updateProject{{ project.project_id }}" data-bs-whatever="project" data-feather="edit"></span>
-                            <span class="ms-2 pb-1" data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.project_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+                            <div class="fw-bolder fs-6">{{project.project_name | capitalize }}</div> 
+                            <span class="ms-5 pb-1 " data-bs-toggle="modal" data-bs-target="#updateProject{{ project.project_id }}" data-bs-whatever="project" data-feather="edit"></span>
+                            <span class="ms-2 pb-1 " data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.project_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
                         </button>
                     </p>
                     <div id="{{project.project_name}}" class="accordion-collapse collapse" > <!--removing it for testing, later add collapse in the class to collapse it-->
                         <div class="accordion-body border-0" >       
                             <div class="d-flex ">         
-                                <span class="d-block opacity-50 py-2">{{project.project_description}}</span>
+                                <span class="d-block opacity-50 py-2">{{project.project_description | capitalize}}</span>
                             </div>  
-                            <h6 class="pt-3">{{project.project_name}} Meetings </h6>
+                            <h6 class="pt-3">{{project.project_name | capitalize}} Meetings </h6>
                             <div class="card border-0 mx-0">
                                 <div class="card-body ">
                                     <a href="#" class=""><div class="card-title ">Meeting name</div></a>
@@ -65,7 +65,7 @@
                             <div class="modal-body">
                                 <p class="text-center pt-3">Are you sure you want delete this meeting?</p>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer text-center">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <a href=""> <button type="submit" class="btn btn-primary">Delete</button></a>
                             </div>
@@ -76,7 +76,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                             <div class="modal-body">
-                                <p class="text-center pt-3">Are you sure you want delete this {{project.project_name}} project?</p>
+                                <p class="text-center pt-3">Are you sure you want delete this {{project.project_name | capitalize}} project?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -6,13 +6,6 @@
     <title></title>
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
 
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -39,7 +32,7 @@
   {% endfor %}
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid pe-5">
     <div class="row ">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block  sidebar collapse">
         <div class="position-sticky pt-5">
@@ -80,9 +73,11 @@
       </nav>
     </div>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     <main class="col-md-9 ms-sm-auto px-md-4 px-lg-5 col-lg-10"> <!-- removed col-lg-10 -->
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">{% block heading %}Dashboard{% endblock %}</h1>
+        <div class="fw-bold fs-4 ms-2">
+          {% block heading %}Dashboard{% endblock %}
+        </div>
         <div class="btn-toolbar mb-2 mb-md-0">
           {% block my_buttons %}{% endblock %}
         </div>

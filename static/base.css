@@ -161,7 +161,7 @@ body {
       height: 40px;
       background: darkmagenta;
       color: #fff;
-      border-radius: 5px;
+      border-radius: 15px;
       border: 0;
       box-shadow: 0 3px 0 0 hotpink;
       transition: all 0.3s ease-in-out;
@@ -177,25 +177,16 @@ body {
   /* for project list */
 
   .list-group {
-    width: 100%;
+    /* display: flex; */
+    width: 80%;
     /* max-width: 460px; */
-    margin-inline: 1.5rem;
+    /* margin-inline: 1.5rem; */
   }
-  .list-group-checkable .list-group-item {
+  .list-group-item {
     cursor: pointer;
+    /* width: 60%; */
     /* font-size: 2rem ; */
-
   }
-  .list-group-item-check {
-    position: absolute;
-    clip: rect(0, 0, 0, 0);
-  }
-  .list-group-item-check:hover + .list-group-item, 
-  .list-group-item-check:checked + .list-group-item {
-    background-color:#eeeeee;
-  }
-   
-
 /* for three dots */
 
   /* .dotbtn {
@@ -223,6 +214,15 @@ body {
   transform: translate(20%, -50%);
 } */
 
+a{
+  text-decoration: none;
+}
+
+.accordion-header, .accordion-item,.accordion-button, .card{
+  border-radius: 15px !important;
+  /* border-color: #e541933c; */
+}
+
 .trashBtn{
   position: absolute;
   left: 95%;
@@ -232,4 +232,10 @@ body {
   /* padding: 0 ; */
   /* border: none ; */
   /* background-color: transparent; */
+}
+
+.items{
+  /* width: 80%; */
+  /* padding: 0px 20px 0px 20px */
+  /* display: flex; */
 }
