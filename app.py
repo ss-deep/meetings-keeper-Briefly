@@ -7,7 +7,7 @@ import email_validator
 import os
 from werkzeug.utils import secure_filename
 from text_converter import video_to_text_converter
-from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting, get_meetings
+from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting, get_meetings, update_meeting, delete_a_meeting,get_a_meeting
 from groq_api import summary_generator
 
 
@@ -119,7 +119,7 @@ def upload_file():
                 transcript = video_to_text_converter(filename)
                 # Call Groq for summary
                 summary=summary_generator(transcript)
-                
+
                 # Call function to insert in database  
                 meeting=create_meeting(title=title , brief_summary=summary, detail_summary=transcript, project_id=project_id)
 
@@ -129,10 +129,31 @@ def upload_file():
     return render_template('upload.html',form=form)
     
 
-@app.route('/summary/<meeting>')
+@app.route('/summary/<meeting_id>')
 @login_required
-def summary(meeting):
+def summary(meeting_id):
+    meeting=Meeting.query.get(meeting_id)
     return render_template("summary.html",meeting=meeting)
+
+@app.route('/edit_meeting/<meeting_id>',methods=["POST"])
+@login_required
+def edit_meeting(meeting_id):
+    title=request.form.get("title")
+    brief_summary=request.form.get("brief_summary")
+    detail_summary=request.form.get("detail_summary")
+    project_id=request.form.get("project_id")
+    update_meeting(meeting_id, title, brief_summary, detail_summary, project_id)
+    flash('Project Updated', 'success')
+    return render_template("meetings.html", meetings=get_meetings())
+
+
+@app.route('/delete/<meeting_id>')
+@login_required
+def delete_meeting(meeting_id):
+    delete_a_meeting(meeting_id)
+    flash('Meeting Deleted', 'danger')
+    return render_template("meetings.html", meetings=get_meetings())
+
 
 
 
@@ -150,7 +171,7 @@ def projects():
     return render_template("projects.html", projects=get_projects())
 
 
-@app.route('/edit/<project_id>',methods=["POST"])
+@app.route('/edit_project/<project_id>',methods=["POST"])
 @login_required
 def edit_project(project_id):
     new_name=request.form.get("project-name")

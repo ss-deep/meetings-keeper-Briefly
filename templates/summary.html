@@ -1,8 +1,23 @@
-
 {% extends "base.html" %}
-{% block heading %}Summary of meeting{% endblock %}
+{% block heading %}Summary of Meeting - {{ meeting.title | capitalize }}{% endblock %}
 {% block content %}
-<!-- <h1>Hello</h1> -->
-<p>{{meeting.title}}</p>
-<p>{{meeting.brief_summary}}</p>
+<ul class="nav nav-tabs me-auto" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="transcript-tab" data-bs-toggle="tab" data-bs-target="#transcript" type="button" role="tab">Transcript</button>
+    </li>                              
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" onclick="showSummary()">Summary</button>
+    </li>
+</ul>
+
+<div class="tab-content shadow-sm py-5" id="myTabContent">
+    <div class="tab-pane fade mt-5 px-3 show active" id="transcript" role="tabpanel">{{ meeting.detail_summary }}</div>
+    <div class="tab-pane fade mt-5 px-3" id="summary" role="tabpanel">{{ meeting.brief_summary }}</div>
+</div>
+
+<script>
+    function showSummary() {
+        document.getElementById("summary").innerHTML = `{{ meeting.brief_summary | safe }}`;
+    }
+</script>
 {% endblock %}

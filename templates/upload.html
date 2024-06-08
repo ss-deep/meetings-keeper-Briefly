@@ -2,11 +2,16 @@
 {% block heading %}Upload{% endblock %}
 {% block content %}
     <div class="frame">
+        <form method='POST' enctype='multipart/form-data'>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
         <div class="center">
             <h5 id="file-name"></h5>
-
             <div class="dropzone">
-                <form method='POST' enctype='multipart/form-data'>
                     <div class="upload-info">
                         <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
                         <h1>Click to upload a file</h1>
@@ -14,8 +19,8 @@
                     {{form.hidden_tag()}}
                     {{form.file(class="upload-input")}}
                     {{form.submit(class="btn px-4")}}</div>
-            </form>	
         </div>
+    </form>	
     </div>
     <script>
         document.getElementById("file").onchange = function() {
@@ -34,8 +39,6 @@
         }
 
          document.getElementById("submit").onclick = function() {
-            // document.querySelector('.upload-info').style.opacity=0
-            // document.querySelector(".upload-info").style.opacity=0
             if(document.getElementById("file").value!==""){
             document.getElementById("loading").innerHTML=`<div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>

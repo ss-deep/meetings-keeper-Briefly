@@ -19,7 +19,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="project_description" class="col-form-label">Project Description:</label>
-                        <input type="textarea" class="form-control" id="project_description" name="project_description">
+                        <textarea rows="5" class="form-control" id="project_description" name="project_description"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -46,12 +46,12 @@
                     <div id="{{project.project_name}}" class="accordion-collapse collapse" > <!--removing it for testing, later add collapse in the class to collapse it-->
                         <div class="accordion-body border-0" >       
                             <div class="d-flex ">         
-                                <span class="d-block opacity-50 py-2">{{project.project_description | capitalize}}</span>
+                                <span class="d-block text-muted py-2">{{project.project_description | capitalize}}</span>
                             </div>  
                             <h6 class="pt-3">{{project.project_name | capitalize}} Meetings </h6>
                             <div class="card border-0 mx-0">
                                 <div class="card-body ">
-                                    <a href="#" class=""><div class="card-title ">Meeting name</div></a>
+                                    <a href="#" class="meeting_link"><div class="card-title ">Meeting name</div></a>
                                     <span class="trashBtn" data-bs-toggle="modal" data-bs-target="#deleteMeeting" data-bs-whatever="delete" data-feather="trash-2"></span>
                                 </div>
                             </div>                    
@@ -96,7 +96,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="project_description" class="col-form-label">Project Description:</label>
-                                <input type="textarea" class="form-control" id="project_description" value="{{project.project_description}}" name="project_description">
+                                <textarea rows="5" class="form-control" id="project_description"  name="project_description">{{project.project_description}}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">

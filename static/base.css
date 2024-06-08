@@ -90,7 +90,7 @@ body {
   
   .frame {
       position: absolute;
-      top: 40%;
+      top: 55%;
       left: 50%;
       width: 50%;
       height: 50%;
@@ -206,19 +206,20 @@ body {
 .dropdown-item {
     padding: 0px 5px ;
     font-size: 12px ;
-}
+}*/
 .bar{
   position: absolute;
-  top: 80%;
+  top: 90%;
   left: 55%;
   transform: translate(20%, -50%);
-} */
+} 
 
 a{
   text-decoration: none;
+  color:black;
 }
 
-.accordion-header, .accordion-item,.accordion-button, .card{
+.accordion-header, .accordion-item,.accordion-button, .card, .list-group-item{
   border-radius: 15px !important;
   /* border-color: #e541933c; */
 }
@@ -234,8 +235,12 @@ a{
   /* background-color: transparent; */
 }
 
-.items{
-  /* width: 80%; */
+.meeting_link{
+  width: 100%;
   /* padding: 0px 20px 0px 20px */
   /* display: flex; */
+}
+
+.project_name{
+  font-size: 0.8rem;
 }

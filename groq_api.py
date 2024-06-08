@@ -13,7 +13,7 @@ def summary_generator(text):
         messages=[
             {
                 "role": "user",
-                "content": f"Summarize the text with key points, {text}",
+                "content": f"Generate self-explanatory and concise summaries with html tags, each topic. Use html tag to to make bold instead of '**'. Refer to people's names whenever appropriate, and avoid metioning 'HTML tags' and 'each topic on a new line' in your response at the start. {text}"
             }
         ],
         model="llama3-70b-8192",

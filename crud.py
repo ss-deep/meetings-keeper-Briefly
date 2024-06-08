@@ -38,8 +38,10 @@ def delete_a_project(project_id):
 
 def update_project(project_id,new_name,project_description):
     project=Project.query.get(project_id)
-    project.project_name=new_name
-    project.project_description=project_description
+    if new_name :
+        project.project_name=new_name
+    if project_description:
+        project.project_description=project_description
     db.session.commit()
 
 
@@ -55,8 +57,24 @@ def get_meetings():
     meeting=Meeting.query.all()
     return meeting
 
-def update_meeting():
-    pass
+def get_a_meeting(meeting_id):
+    return Meeting.query.get(meeting_id)
 
-def delete_meeting():
-    pass
+def update_meeting(meeting_id,title,brief_summary,detail_summary,project_id):
+    meeting=Meeting.query.get(meeting_id)
+    if title :
+        meeting.title=title
+    if brief_summary:
+        meeting.brief_summary=brief_summary
+    if detail_summary:
+        meeting.detail_summary=detail_summary
+    if project_id:
+        meeting.project_id=project_id
+    # return meeting
+
+def delete_a_meeting(meeting_id):
+    meeting=Meeting.query.get(meeting_id)
+    db.session.delete(meeting)
+    db.session.commit()
+    # return meeting
+
