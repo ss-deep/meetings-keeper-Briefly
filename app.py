@@ -95,7 +95,7 @@ def meetings():
 # @app.route('/upload')
 @login_required
 def upload_file():
-    form = UploadFileForm(select=6)
+    form = UploadFileForm(project_selection=9)
     form.get_project_list(Project.query.all())
     # to get project id (passed as arguments) after clicking Add meeting in projects.html
     project_id=request.args.get('project_id')

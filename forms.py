@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
-    project_selection=SelectField("Select Project", default="Other")
+    project_selection=SelectField("Select Project")
     submit = SubmitField("Upload File")
 
     def get_project_list(self,projects):

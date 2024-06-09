@@ -32,43 +32,47 @@
     </div>
 {% endblock %}
 {% block content %}
+        
     {% for project in projects %}
         <div class="items">
             <div class="accordion py-3" id="accordionExample">
                 <div class="accordion-item ">
                     <p class="accordion-header ">
-                        <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#{{project.project_name}}">
-                            <div class="fw-bolder fs-6">{{project.project_name | capitalize }}</div> 
-                            <span class="ms-5 pb-1 " data-bs-toggle="modal" data-bs-target="#updateProject{{ project.project_id }}" data-bs-whatever="project" data-feather="edit"></span>
-                            <span class="ms-2 pb-1 " data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.project_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ project.project_name | replace(' ', '_') }}">
+                            <div class="fw-bolder fs-6">{{ project.project_name | capitalize }}</div> 
+                            <span class="ms-5 pb-1" data-bs-toggle="modal" data-bs-target="#updateProject{{ project.project_id }}" data-bs-whatever="project" data-feather="edit"></span>
+                            <span class="ms-2 pb-1" data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.project_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
                         </button>
                     </p>
-                    <div id="{{project.project_name}}" class="accordion-collapse collapse" > <!--removing it for testing, later add collapse in the class to collapse it-->
-                        <div class="accordion-body border-0" >       
-                            <div class="d-flex ">         
-                                <span class="d-block text-muted py-2">{{project.project_description | capitalize}}</span>
+                    <!-- Replaced spaces in project.project_name with underscores to ensure valid HTML IDs -->
+                    <div id="{{ project.project_name | replace(' ', '_') }}" class="accordion-collapse collapse">
+                        <div class="accordion-body border-0">
+                            <div class="d-flex">
+                                <span class="d-block text-muted py-2">{{ project.project_description | capitalize }}</span>
                             </div>  
-                            <h6 class="pt-3">{{project.project_name | capitalize}} Meetings </h6>
+                            <h6 class="pt-3">{{ project.project_name | capitalize }} Meetings</h6>
                             <div class="card border-0 mx-0">
-                                <div class="card-body ">
-                                    <a href="#" class="meeting_link"><div class="card-title ">Meeting name</div></a>
-                                    <span class="trashBtn" data-bs-toggle="modal" data-bs-target="#deleteMeeting" data-bs-whatever="delete" data-feather="trash-2"></span>
+                                <div class="card-body">
+                                    {% for meeting in project.meetings %}
+                                    <a href="{{ url_for('summary', meeting_id=meeting.meeting_id) }}" class="meeting_link"><div class="card-title">{{ meeting.title | capitalize }}</div></a>
+                                    <span class="trashBtn" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
+                                    <div class="modal fade" id="deleteMeeting{{ meeting.meeting_id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <p class="text-center pt-3">Are you sure you want delete this meeting?</p>
+                                                    </div>
+                                                    <div class="modal-footer text-center">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <a href="{{ url_for('delete_meeting', meeting_id=meeting.meeting_id) }}"> <button type="submit" class="btn btn-primary">Delete</button></a>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
-                            </div>                    
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="deleteMeeting" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                            <div class="modal-body">
-                                <p class="text-center pt-3">Are you sure you want delete this meeting?</p>
-                            </div>
-                            <div class="modal-footer text-center">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href=""> <button type="submit" class="btn btn-primary">Delete</button></a>
-                            </div>
                     </div>
                 </div>
             </div>
