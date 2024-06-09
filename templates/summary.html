@@ -9,11 +9,18 @@
         <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" onclick="showSummary()">Summary</button>
     </li>
 </ul>
-
-<div class="tab-content shadow-sm py-5" id="myTabContent">
-    <div class="tab-pane fade mt-5 px-3 show active" id="transcript" role="tabpanel">{{ meeting.detail_summary }}</div>
-    <div class="tab-pane fade mt-5 px-3" id="summary" role="tabpanel">{{ meeting.brief_summary }}</div>
+<div class="tab-content shadow-sm pt-5" id="myTabContent">
+    <div class="tab-pane fade mt-2 px-3 show active" id="transcript" role="tabpanel">{{ meeting.detail_summary }}</div>
+    <div class="tab-pane fade mt-2 px-3" id="summary" role="tabpanel">{{ meeting.brief_summary }}</div>
+    <button type="button" class="btn px-3 my-4 mx-3" >
+        Edit
+    </button>
+    <button type="button" class="btn my-4" >
+        Add or Change Project
+    </button>
 </div>
+
+<!-- Modal to add or change project for the meeting -->
 
 <script>
     function showSummary() {

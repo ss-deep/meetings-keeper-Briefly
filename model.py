@@ -52,9 +52,15 @@ class Project(db.Model):
     project_name = db.Column(db.String, nullable=False, unique=True)
     project_description = db.Column(db.String, nullable=True)
 
+    def __init__(self, project_name, project_description=None):
+        self.project_name = project_name
+        self.project_description = project_description
+        
     def __repr__(self):
         return f"<Project project_id={self.project_id} project_name={self.project_name}>"
-
+    
+    def add_default_project(self):
+        self.project_name="Other"
 
 class Meeting(db.Model):
     __tablename__ = "meetings"
@@ -90,3 +96,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     with app.app_context():
         db.create_all()
+        project=Project("Other")
+        db.session.add(project)
+        db.session.commit()
+

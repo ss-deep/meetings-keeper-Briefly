@@ -27,7 +27,8 @@ def video_to_text_converter(video_file):
         print("Text data saved to file")
         # file.close()
         os.remove(output_audio_path)
-        print("Audio file removed")
+        os.remove(filepath)
+        print("Audio ande video file removed")
         return text_data
 
     except Exception as e:

@@ -87,6 +87,15 @@ body {
 
 
 /* for upload box in upload.html */
+
+  .select_project{
+      width: 30%;
+      position: absolute;
+      top: 25%;
+      left: 55%;
+      transform: translate(-50%, -50%);
+      display: flex;
+  }
   
   .frame {
       position: absolute;

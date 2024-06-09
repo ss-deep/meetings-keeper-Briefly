@@ -95,10 +95,10 @@ def meetings():
 # @app.route('/upload')
 @login_required
 def upload_file():
-    form = UploadFileForm()
+    form = UploadFileForm(select=6)
+    form.get_project_list(Project.query.all())
     # to get project id (passed as arguments) after clicking Add meeting in projects.html
     project_id=request.args.get('project_id')
-
     if request.method == 'POST':
         if form.validate_on_submit():
             file = form.file.data # First grab the file
@@ -112,18 +112,15 @@ def upload_file():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename) #secure_filename("My cool movie.mov") converts it to 'My_cool_movie.mov'
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                flash('File successfully uploaded', 'success')
                 title=filename.capitalize()
-
                 # Convert uploaded file to text
                 transcript = video_to_text_converter(filename)
                 # Call Groq for summary
                 summary=summary_generator(transcript)
-
+                flash('File successfully uploaded', 'success')
                 # Call function to insert in database  
-                meeting=create_meeting(title=title , brief_summary=summary, detail_summary=transcript, project_id=project_id)
-
-                return render_template("summary.html",meeting=meeting)
+                meeting=create_meeting(title=title , brief_summary=summary, detail_summary=transcript, project_id=form.project_selection.data)
+                return render_template("summary.html",meeting=meeting, projects=get_projects())
             else:
                 flash('File type not allowed', 'danger')
     return render_template('upload.html',form=form)
@@ -133,7 +130,8 @@ def upload_file():
 @login_required
 def summary(meeting_id):
     meeting=Meeting.query.get(meeting_id)
-    return render_template("summary.html",meeting=meeting)
+    projects=get_projects()
+    return render_template("summary.html",meeting=meeting,projects=projects)
 
 @app.route('/edit_meeting/<meeting_id>',methods=["POST"])
 @login_required
@@ -154,7 +152,12 @@ def delete_meeting(meeting_id):
     flash('Meeting Deleted', 'danger')
     return render_template("meetings.html", meetings=get_meetings())
 
-
+@app.route('/add_project/<meeting_id>', methods=["POST"])
+@login_required
+def add_project_to_meeting(meeting_id):
+    meeting=get_a_meeting(meeting_id)
+    print(f"options--------{request.form.get('options')}")
+    pass
 
 
 ################################################################
@@ -204,6 +207,9 @@ def get_files(target):
             # )
     return files_list
  
+
+
+
 
 if __name__ == "__main__":
     if not os.path.exists(app.config['UPLOAD_FOLDER']):

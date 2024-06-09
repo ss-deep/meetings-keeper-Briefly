@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField,PasswordField,FileField
+from wtforms import StringField, SubmitField,PasswordField,FileField, SelectField
 from wtforms.validators import DataRequired,Email,EqualTo,InputRequired
 from wtforms import ValidationError
 from model import User
@@ -30,5 +30,10 @@ class RegistrationForm(FlaskForm):
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
+    project_selection=SelectField("Select Project", default="Other")
     submit = SubmitField("Upload File")
+
+    def get_project_list(self,projects):
+        self.project_selection.choices=[(project.project_id, project.project_name) for project in projects]
+
 
