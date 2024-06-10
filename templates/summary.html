@@ -1,30 +1,87 @@
 {% extends "base.html" %}
+{% block title %}Summary{% endblock %}
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+{% endblock %}
 {% block heading %}Summary of Meeting - {{ meeting.title | capitalize }}{% endblock %}
 {% block content %}
 <ul class="nav nav-tabs me-auto" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="transcript-tab" data-bs-toggle="tab" data-bs-target="#transcript" type="button" role="tab">Transcript</button>
-    </li>                              
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" onclick="showSummary()">Summary</button>
+        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab">Summary</button>
     </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link " id="transcript-tab" data-bs-toggle="tab" data-bs-target="#transcript" type="button" role="tab">Transcript</button>
+    </li>                              
 </ul>
 <div class="tab-content shadow-sm pt-5" id="myTabContent">
-    <div class="tab-pane fade mt-2 px-3 show active" id="transcript" role="tabpanel">{{ meeting.detail_summary }}</div>
-    <div class="tab-pane fade mt-2 px-3" id="summary" role="tabpanel">{{ meeting.brief_summary }}</div>
-    <button type="button" class="btn px-3 my-4 mx-3" >
-        Edit
-    </button>
-    <button type="button" class="btn my-4" >
-        Add or Change Project
-    </button>
+    <div class="tab-pane fade mt-2 px-3 show active " id="summary" role="tabpanel">
+        
+        <!-- <div class=" fade px-3 show " id="summernote" ><div ><button class="btn" >Save</button></div></div> -->
+
+        <div class="visible">{{ meeting.brief_summary | safe }}<br>
+            <button type="button" class="btn px-3 my-4 mx-3" onclick="showText(this)" data-bs-toggle="modal" data-bs-target="#editSummary" data-bs-whatever="editSummary">
+            Edit
+            </button>
+            <button type="button" class="btn my-4" >
+            Add or Change Project
+            </button>
+        </div>
+    </div>
+
+    <div class="tab-pane fade mt-2 px-3 show visible" id="transcript" role="tabpanel">
+
+        <!-- <div class=" fade px-3 show " id="summernote" ><div ><button class="btn" >Save</button></div></div> -->
+
+        <div class="visible">{{ meeting.detail_summary }}<br>
+            <button type="button" class="btn px-3 my-4 mx-3" onclick="showText(this)" data-bs-toggle="modal" data-bs-target="#editSummary" data-bs-whatever="editSummary">
+            Edit
+            </button>
+            <button type="button" class="btn my-4" >
+            Add or Change Project
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal to edit summary of the meeting -->
+
+<div class="modal fade" id="editSummary" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Edit Summary</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form method="POST" action="">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div id="summernote"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Done</button>
+            </div>
+        </form>
+        </div>
+    </div>
 </div>
 
 <!-- Modal to add or change project for the meeting -->
 
 <script>
-    function showSummary() {
-        document.getElementById("summary").innerHTML = `{{ meeting.brief_summary | safe }}`;
-    }
+    function showText(e) {
+        // document.querySelector("#summary").style.opacity=0
+    // let markupStr = 'hello world';
+        // $('#summernote').summernote('code', markupStr);
+    $('#summernote').summernote({
+    height: 400,                 // set editor height
+    minHeight: null,             // set minimum height of editor
+    maxHeight: null,             // set maximum height of editor
+    focus: true,                 // set focus to editable area after initializing summernote
+    });    
+}
 </script>
 {% endblock %}

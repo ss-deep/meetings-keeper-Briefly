@@ -225,7 +225,7 @@ body {
 
 a{
   text-decoration: none;
-  color:black;
+  color:darkmagenta;
 }
 
 .accordion-header, .accordion-item,.accordion-button, .card, .list-group-item{
@@ -252,4 +252,11 @@ a{
 
 .project_name{
   font-size: 0.8rem;
+}
+
+.visible {
+  visibility: visible !important;
+}
+.invisible {
+  visibility: hidden !important;
 }
