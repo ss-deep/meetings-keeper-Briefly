@@ -133,6 +133,20 @@ def summary(meeting_id):
     projects=get_projects()
     return render_template("summary.html",meeting=meeting,projects=projects)
 
+@app.route('/update_summary/<meeting_id>', methods=['POST'])
+def update_summary(meeting_id):
+    meeting = Meeting.query.get_or_404(meeting_id)
+    summary_type = request.form.get('summernote')
+    updated_content = request.form.get('content')
+
+    if summary_type == 'brief':
+        meeting.brief_summary = updated_content
+    elif summary_type == 'detail':
+        meeting.detail_summary = updated_content
+
+    db.session.commit()
+    return redirect(url_for('summary',meeting_id=meeting_id))
+
 @app.route('/edit_meeting/<meeting_id>',methods=["POST"])
 @login_required
 def edit_meeting(meeting_id):
@@ -159,6 +173,19 @@ def add_project_to_meeting(meeting_id):
     print(f"options--------{request.form.get('options')}")
     pass
 
+@app.route('/change_project/<int:meeting_id>', methods=['POST'])
+def change_project(meeting_id):
+    project_id = request.form.get('project_id')
+    meeting = Meeting.query.get_or_404(meeting_id)
+    
+    if project_id:
+        meeting.project_id = project_id
+        db.session.commit()
+        flash('Project updated successfully!', 'success')
+    else:
+        flash('Failed to update project. Please try again.', 'danger')
+    
+    return redirect(url_for('summary', meeting_id=meeting_id))
 
 ################################################################
 ###############   View function for Projects   #################

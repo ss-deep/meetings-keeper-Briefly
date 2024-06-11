@@ -1,6 +1,6 @@
 from utils import video_to_audio, audio_to_text
 import os
-from groq_api import summary_generator
+# from groq_api import summary_generator
 
 def video_to_text_converter(video_file):
     try:
