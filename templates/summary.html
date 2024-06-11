@@ -17,15 +17,17 @@
 </ul>
 <div class="tab-content shadow-sm pt-5" id="myTabContent">
     <div class="tab-pane fade mt-2 px-3 show active" id="summary" role="tabpanel">
-        <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
-        <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button>
-        <button id="saveBrief" class="btn btn-primary" onclick="save('briefSummary')" type="button">Save</button>
+        <form method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id) }}">
+            <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
+            <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button>
+            <button id="saveBrief" class="btn btn-primary" onclick="save('briefSummary')" type="submit">Save</button>
+        </form>
         <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
     </div>
     <div class="tab-pane fade mt-2 px-3" id="transcript" role="tabpanel">
         <div class="click2edit" id="detailSummary">{{ meeting.detail_summary | safe }}</div><br>
         <button id="editDetail" class="btn btn-primary" onclick="edit('detailSummary')" type="button">Edit</button>
-        <button id="saveDetail" class="btn btn-primary" onclick="save('detailSummary')" type="button">Save</button>
+        <button id="saveDetail" class="btn btn-primary" onclick="save('detailSummary')" type="submit">Save</button>
         <button type="button" class="btn my-4" id="myBtn2">Add or Change Project</button>   
     </div>
 </div>
@@ -40,12 +42,15 @@
             <form method="POST" action="{{ url_for('change_project', meeting_id=meeting.meeting_id) }}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="projectSelect" class="form-label">Select Project</label>
+                        <label for="projectSelect" class="form-label">Select Project:</label>
                         <select class="form-select" id="projectSelect" name="project_id" required>
                             {% for project in projects %}
-                                <option value="{{ project.project_id }}">{{ project.project_name | capitalize }}</option>
-                            {% endfor %}
-                        </select>
+                            <option value="{{ project.project_id }}" 
+                                {% if meeting.project_id == project.project_id %}selected{% endif %}>
+                                {{ project.project_name | capitalize }}
+                            </option>
+                        {% endfor %}                        
+                    </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -65,9 +70,8 @@ var edit = function(id) {
 };
 
 var save = function(id) {
-    var markup = $('#' + id).summernote('code');
+    var newCode = $('#' + id).summernote('code');
     $('#' + id).summernote('destroy');
-    console.log(markup); // Debugging line to check the content
 };
 </script>
 {% endblock %}
