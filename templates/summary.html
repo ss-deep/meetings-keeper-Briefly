@@ -35,7 +35,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="changeProjectModalLabel">Add or Change Project</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="POST" action="{{ url_for('change_project', meeting_id=meeting.meeting_id) }}">
                 <div class="modal-body">
@@ -67,7 +67,6 @@ var edit = function(id) {
 var save = function(id) {
     var markup = $('#' + id).summernote('code');
     $('#' + id).summernote('destroy');
-    // Optionally, you can send the markup to the server here
     console.log(markup); // Debugging line to check the content
 };
 </script>
