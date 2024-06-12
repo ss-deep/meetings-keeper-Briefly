@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 from text_converter import video_to_text_converter
 from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting, get_meetings, update_meeting, delete_a_meeting,get_a_meeting
 from groq_api import summary_generator
-from file_operations import download
 import pdfkit
 
 
