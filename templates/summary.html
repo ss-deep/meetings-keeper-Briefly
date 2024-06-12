@@ -18,20 +18,29 @@
 <div class="tab-content shadow-sm pt-5" id="myTabContent">
     <div class="tab-pane fade mt-2 px-3 show active" id="summary" role="tabpanel">
             <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
-            <!-- <form method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id,brief_summary=meeting.brief_summary) }}"> -->
-
-            <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button>
+            <!-- <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button> -->
             <button id="saveBrief" class="btn btn-primary" onclick="save('briefSummary')" type="submit">Save</button>
-        <!-- </form> -->
-        <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
+        <!-- <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button> -->
     </div>
     <div class="tab-pane fade mt-2 px-3" id="transcript" role="tabpanel">
         <div class="click2edit" id="detailSummary">{{ meeting.detail_summary | safe }}</div><br>
         <button id="editDetail" class="btn btn-primary" onclick="edit('detailSummary')" type="button">Edit</button>
         <button id="saveDetail" class="btn btn-primary" onclick="save('detailSummary')" type="submit">Save</button>
-        <button type="button" class="btn my-4" id="myBtn2">Add or Change Project</button>   
+        <!-- <button type="button" class="btn my-4" id="myBtn2">Add or Change Project</button>    -->
     </div>
 </div>
+<form id="summaryForm" method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id) }}">
+    <input type="hidden" id="summaryContent" name="content">
+    <input type="hidden" id="summaryId" name="summary_id">
+    <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit Summary</button>
+    <button id="saveBrief" class="btn btn-primary" onclick="submitForm('briefSummary')" type="button">Save Summary</button>
+    
+    <button id="editDetail" class="btn btn-primary" onclick="edit('detailSummary')" type="button">Edit</button>
+    <button id="saveDetail" class="btn btn-primary" onclick="submitForm('detailSummary')" type="button">Save Transcript</button>
+    <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
+
+</form>
+
  <!-- Modal to add or change project for the meeting -->
 <div class="modal fade" id="changeProjectModal" tabindex="-1" >
     <div class="modal-dialog">
@@ -64,20 +73,41 @@
 </div>
 
 <script>
-var edit = function(id) {
-    $('#' + id).summernote({
-        focus: true
-    });
-};
+    var edit = function(id) {
+        $('#' + id).summernote({
+            focus: true
+        });
+    };
 
-var save = function(id) {
-    var newCode = $('#' + id).summernote('code');
-    $('#' + id).summernote('destroy');
+    var submitForm = function(id) {
+        var newContent = $('#' + id).summernote('code');
+        $('#' + id).summernote('destroy');
+
+        document.getElementById('summaryContent').value = newContent;
+        document.getElementById('summaryId').value = id;
+
+        document.getElementById('summaryForm').submit();
+    };
+
+
+
+
+// var edit = function(id) {
+//     $('#' + id).summernote({
+//         focus: true
+//     });
+// };
+
+// var save = function(id) {
+//     var newCode = $('#' + id).summernote('code');
+//     $('#' + id).summernote('destroy');
+
     // console.log(newCode);
     // console.log(document.getElementById("briefSummary").innerHTML);
     // document.getElementById("briefSummary").innerHTML= newCode
     // console.log(document.getElementById("briefSummary").innerHTML);
 
-};
+// };
 </script>
+
 {% endblock %}

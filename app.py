@@ -135,17 +135,21 @@ def summary(meeting_id):
 
 @app.route('/update_summary/<meeting_id>', methods=['POST'])
 def update_summary(meeting_id):
-    meeting = Meeting.query.get_or_404(meeting_id)
-    print(f"meeting.title------////---{meeting.title}")
-    brief_summary = request.args.get("brief_summary")
-    print(f"brief_summary---------{brief_summary}")
+    # meeting = Meeting.query.get_or_404(meeting_id)
+    # print(f"meeting.title------////---{meeting.title}")
+    # brief_summary = request.args.get("brief_summary")
+    # print(f"brief_summary---------{brief_summary}")
     
-    if brief_summary:
-        meeting.brief_summary = brief_summary
-        db.session.commit()
-        flash('Summary updated successfully', 'success')
-    else:
-        flash('Failed to update summary', 'error')
+    # if brief_summary:
+    #     meeting.brief_summary = brief_summary
+    #     db.session.commit()
+    #     flash('Summary updated successfully', 'success')
+    # else:
+    #     flash('Failed to update summary', 'error')
+    summary_id = request.form.get('summary_id')
+    content = request.form.get('content')
+    print(f"brief_summary---------{summary_id}")
+    print(f"brief_summary---------{content}")
 
     return redirect(url_for('summary',meeting_id=meeting_id))
 
