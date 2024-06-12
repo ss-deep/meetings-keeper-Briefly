@@ -136,8 +136,8 @@ def summary(meeting_id):
 @app.route('/update_summary/<meeting_id>', methods=['POST'])
 def update_summary(meeting_id):
     meeting = Meeting.query.get_or_404(meeting_id)
-    
-    brief_summary = request.form.get("briefSummary")
+    print(f"meeting.title------////---{meeting.title}")
+    brief_summary = request.args.get("brief_summary")
     print(f"brief_summary---------{brief_summary}")
     
     if brief_summary:
@@ -153,7 +153,7 @@ def update_summary(meeting_id):
 @login_required
 def edit_meeting(meeting_id):
     title=request.form.get("title")
-    brief_summary=request.form.get("briefSummary")
+    brief_summary=request.form.get("brief_summary")
     # print(f"brief_summary---------{brief_summary}")
 
     detail_summary=request.form.get("detail_summary")

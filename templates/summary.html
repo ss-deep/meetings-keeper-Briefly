@@ -17,11 +17,12 @@
 </ul>
 <div class="tab-content shadow-sm pt-5" id="myTabContent">
     <div class="tab-pane fade mt-2 px-3 show active" id="summary" role="tabpanel">
-        <form method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id) }}">
             <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
+            <!-- <form method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id,brief_summary=meeting.brief_summary) }}"> -->
+
             <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button>
             <button id="saveBrief" class="btn btn-primary" onclick="save('briefSummary')" type="submit">Save</button>
-        </form>
+        <!-- </form> -->
         <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
     </div>
     <div class="tab-pane fade mt-2 px-3" id="transcript" role="tabpanel">
@@ -72,6 +73,11 @@ var edit = function(id) {
 var save = function(id) {
     var newCode = $('#' + id).summernote('code');
     $('#' + id).summernote('destroy');
+    // console.log(newCode);
+    // console.log(document.getElementById("briefSummary").innerHTML);
+    // document.getElementById("briefSummary").innerHTML= newCode
+    // console.log(document.getElementById("briefSummary").innerHTML);
+
 };
 </script>
 {% endblock %}

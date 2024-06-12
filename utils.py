@@ -1,6 +1,6 @@
 from moviepy.editor import VideoFileClip
 import subprocess
-from faster_whisper import WhisperModel
+# from faster_whisper import WhisperModel
 import os
 import speech_recognition as sr
 
