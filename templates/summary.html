@@ -7,7 +7,7 @@
 {% endblock %}
 {% block heading %}Summary of Meeting - {{ meeting.title | capitalize }}{% endblock %}
 {% block my_buttons %}
-<a href="{{url_for('download_pdf',meeting_id=meeting.meeting_id)}}"><button type="button" class="btn my-4" id="myBtn" >PDF</button></a>
+<a href="{{url_for('download_pdf',meeting_id=meeting.meeting_id)}}"><button type="button" class="btn my-4 mx-2" id="myBtn" >PDF</button></a>
 
 <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Change Project</button>
 {% endblock %}
@@ -25,12 +25,12 @@
     <div class="tab-pane fade mt-2 px-3 show active" id="summary" role="tabpanel">
             <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
             <button id="editBrief" class="btn btn-primary my-4" onclick="edit('briefSummary')" type="button">Edit</button>
-            <button id="saveBrief" class="btn btn-primary my-4" onclick="submitForm('briefSummary')" type="button">Save</button>
+            <button id="saveBrief" class="btn btn-primary my-4 mx-2" onclick="submitForm('briefSummary')" type="button">Save</button>
     </div>
     <div class="tab-pane fade mt-2 px-3" id="transcript" role="tabpanel">
         <div class="click2edit" id="detailSummary">{{ meeting.detail_summary | safe }}</div><br>
         <button id="editDetail" class="btn btn-primary my-4" onclick="edit('detailSummary')" type="button">Edit</button>
-        <button id="saveDetail" class="btn btn-primary my-4" onclick="submitForm('detailSummary')" type="button">Save</button>
+        <button id="saveDetail" class="btn btn-primary my-4 mx-2" onclick="submitForm('detailSummary')" type="button">Save</button>
     </div>
 </div>
 <form id="summaryForm" method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id) }}">
