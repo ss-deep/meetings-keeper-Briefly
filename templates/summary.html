@@ -7,7 +7,9 @@
 {% endblock %}
 {% block heading %}Summary of Meeting - {{ meeting.title | capitalize }}{% endblock %}
 {% block my_buttons %}
-<button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
+<a href="{{url_for('download_pdf',meeting_id=meeting.meeting_id)}}"><button type="button" class="btn my-4" id="myBtn" >PDF</button></a>
+
+<button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Change Project</button>
 {% endblock %}
 
 {% block content %}

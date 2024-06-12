@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, session, redirect, url_for
+from flask import Flask, render_template, request, flash, session, redirect, url_for,send_file
 from model import connect_to_db, db, User, Meeting, Project, UserMeeting
 from jinja2 import StrictUndefined
 from forms import LoginForm, RegistrationForm, UploadFileForm
@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 from text_converter import video_to_text_converter
 from crud import create_project, create_user, get_projects, get_user, delete_a_project,update_project,create_meeting, get_meetings, update_meeting, delete_a_meeting,get_a_meeting
 from groq_api import summary_generator
+import pdfkit
 
 
 app = Flask(__name__)
@@ -150,8 +151,8 @@ def update_summary(meeting_id):
     else:
         flash('Failed to update summary', 'error')
 
-    print(f"summary_id---------{summary_id}")
-    print(f"content---------{content}")
+    # print(f"summary_id---------{summary_id}")
+    # print(f"content---------{content}")
 
     return redirect(url_for('summary',meeting_id=meeting_id))
 
@@ -163,12 +164,12 @@ def delete_meeting(meeting_id):
     flash('Meeting Deleted', 'danger')
     return render_template("meetings.html", meetings=get_meetings())
 
-@app.route('/add_project/<meeting_id>', methods=["POST"])
-@login_required
-def add_project_to_meeting(meeting_id):
-    meeting=get_a_meeting(meeting_id)
-    print(f"options--------{request.form.get('options')}")
-    pass
+# @app.route('/add_project/<meeting_id>', methods=["POST"])
+# @login_required
+# def add_project_to_meeting(meeting_id):
+#     meeting=get_a_meeting(meeting_id)
+#     print(f"options--------{request.form.get('options')}")
+#     pass
 
 @app.route('/change_project/<int:meeting_id>', methods=['POST'])
 def change_project(meeting_id):
@@ -217,6 +218,28 @@ def delete_project(project_id):
 
 ################################################################
 ######################   Other function   ######################
+
+
+@app.route('/download_pdf/<meeting_id>')
+@login_required
+def download_pdf(meeting_id):
+    meeting = Meeting.query.get_or_404(meeting_id)
+    # url = request.args.get('url', 'https://www.google.com/')
+    text=f'<b>Summary:</b><p> {meeting.brief_summary} </p><br><b>Transcript:</b><p> {meeting.detail_summary}</p>'
+    pdfkit.from_string(text, './uploads/test.pdf')
+
+    # output_path = 'output.pdf'
+    
+    # Generate PDF from the URL
+    # pdfkit.from_url(text, output_path)
+    
+    # Send the generated PDF as a file download
+    # return send_file(output_path, as_attachment=True, attachment_filename='downloaded.pdf')
+    flash('PDF Saved!', 'success')
+
+    return redirect(url_for('summary', meeting_id=meeting_id))
+
+
 
 
 def get_files(target):
