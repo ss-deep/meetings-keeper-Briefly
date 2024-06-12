@@ -135,36 +135,25 @@ def summary(meeting_id):
 
 @app.route('/update_summary/<meeting_id>', methods=['POST'])
 def update_summary(meeting_id):
-    # meeting = Meeting.query.get_or_404(meeting_id)
-    # print(f"meeting.title------////---{meeting.title}")
-    # brief_summary = request.args.get("brief_summary")
-    # print(f"brief_summary---------{brief_summary}")
-    
-    # if brief_summary:
-    #     meeting.brief_summary = brief_summary
-    #     db.session.commit()
-    #     flash('Summary updated successfully', 'success')
-    # else:
-    #     flash('Failed to update summary', 'error')
+    meeting = Meeting.query.get_or_404(meeting_id)
     summary_id = request.form.get('summary_id')
     content = request.form.get('content')
-    print(f"brief_summary---------{summary_id}")
-    print(f"brief_summary---------{content}")
+
+    if summary_id == 'briefSummary':
+        meeting.brief_summary = content
+        db.session.commit()
+        # flash('Summary updated successfully', 'success')
+    elif summary_id == 'detailSummary':
+        meeting.detail_summary = content
+        db.session.commit()
+        # flash('Transcript updated successfully', 'success')
+    else:
+        flash('Failed to update summary', 'error')
+
+    print(f"summary_id---------{summary_id}")
+    print(f"content---------{content}")
 
     return redirect(url_for('summary',meeting_id=meeting_id))
-
-@app.route('/edit_meeting/<meeting_id>',methods=["POST"])
-@login_required
-def edit_meeting(meeting_id):
-    title=request.form.get("title")
-    brief_summary=request.form.get("brief_summary")
-    # print(f"brief_summary---------{brief_summary}")
-
-    detail_summary=request.form.get("detail_summary")
-    project_id=request.form.get("project_id")
-    update_meeting(meeting_id, title, brief_summary, detail_summary, project_id)
-    flash('Project Updated', 'success')
-    return render_template("meetings.html", meetings=get_meetings())
 
 
 @app.route('/delete/<meeting_id>')

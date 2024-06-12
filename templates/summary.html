@@ -6,6 +6,10 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 {% endblock %}
 {% block heading %}Summary of Meeting - {{ meeting.title | capitalize }}{% endblock %}
+{% block my_buttons %}
+<button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
+{% endblock %}
+
 {% block content %}
 <ul class="nav nav-tabs me-auto" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -18,27 +22,18 @@
 <div class="tab-content shadow-sm pt-5" id="myTabContent">
     <div class="tab-pane fade mt-2 px-3 show active" id="summary" role="tabpanel">
             <div class="click2edit" id="briefSummary">{{ meeting.brief_summary | safe }}</div><br>
-            <!-- <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit</button> -->
-            <button id="saveBrief" class="btn btn-primary" onclick="save('briefSummary')" type="submit">Save</button>
-        <!-- <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button> -->
+            <button id="editBrief" class="btn btn-primary my-4" onclick="edit('briefSummary')" type="button">Edit</button>
+            <button id="saveBrief" class="btn btn-primary my-4" onclick="submitForm('briefSummary')" type="button">Save</button>
     </div>
     <div class="tab-pane fade mt-2 px-3" id="transcript" role="tabpanel">
         <div class="click2edit" id="detailSummary">{{ meeting.detail_summary | safe }}</div><br>
-        <button id="editDetail" class="btn btn-primary" onclick="edit('detailSummary')" type="button">Edit</button>
-        <button id="saveDetail" class="btn btn-primary" onclick="save('detailSummary')" type="submit">Save</button>
-        <!-- <button type="button" class="btn my-4" id="myBtn2">Add or Change Project</button>    -->
+        <button id="editDetail" class="btn btn-primary my-4" onclick="edit('detailSummary')" type="button">Edit</button>
+        <button id="saveDetail" class="btn btn-primary my-4" onclick="submitForm('detailSummary')" type="button">Save</button>
     </div>
 </div>
 <form id="summaryForm" method="POST" action="{{ url_for('update_summary', meeting_id=meeting.meeting_id) }}">
     <input type="hidden" id="summaryContent" name="content">
     <input type="hidden" id="summaryId" name="summary_id">
-    <button id="editBrief" class="btn btn-primary" onclick="edit('briefSummary')" type="button">Edit Summary</button>
-    <button id="saveBrief" class="btn btn-primary" onclick="submitForm('briefSummary')" type="button">Save Summary</button>
-    
-    <button id="editDetail" class="btn btn-primary" onclick="edit('detailSummary')" type="button">Edit</button>
-    <button id="saveDetail" class="btn btn-primary" onclick="submitForm('detailSummary')" type="button">Save Transcript</button>
-    <button type="button" class="btn my-4" id="myBtn1" data-bs-toggle="modal" data-bs-target="#changeProjectModal" data-bs-whatever="changeProjectModal">Add or Change Project</button>
-
 </form>
 
  <!-- Modal to add or change project for the meeting -->

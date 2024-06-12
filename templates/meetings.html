@@ -10,9 +10,8 @@
       <a class="meeting_link me-auto" href="{{ url_for('summary', meeting_id=meeting.meeting_id) }}">
       <div class="  ">
         <div class="fw-bolder fs-6 mb-2">{{meeting.title | capitalize }}</div>
-        <div class="text-muted project_name">Project : {{meeting.project.project_name | capitalize}}</div>
+        <div class="text-muted project_name">Project Name: {{meeting.project.project_name | capitalize}}</div>
       </div></a>
-      <!-- <span class="" data-bs-toggle="modal" data-bs-target="" data-bs-whatever="edit" data-feather="edit"></span> -->
       <span class="" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
     </li>
     <div class="modal fade" id="deleteMeeting{{ meeting.meeting_id }}" tabindex="-1">
