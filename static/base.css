@@ -1,7 +1,12 @@
 
 body {
-    font-size: .875rem;
+    font-size: 1rem;
+    font-family: Adamina;
 
+  }
+  .logo{
+    width: 100px;
+    height: 25px;
   }
   
   .feather {
@@ -42,7 +47,7 @@ body {
   } */
   
   .sidebar .nav-link {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: #dadada;
   }
@@ -85,10 +90,15 @@ body {
   .select_project{
       width: 30%;
       position: absolute;
-      top: 25%;
+      top: 30%;
       left: 55%;
       transform: translate(-50%, -50%);
       display: flex;
+  }
+
+  .select_label{
+    width: 90%;
+    text-align: center;
   }
   
   .frame {
@@ -102,9 +112,7 @@ body {
       border-radius: 2px;
       box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      /* background: linear-gradient(to top right, darkmagenta 0%, hotpink 100%); */
       color: #333;
-      font-family: "Open Sans", Helvetica, sans-serif;
   }
   
   .center {
@@ -132,7 +140,7 @@ body {
   }
   
   h1 {
-      font-size: 1rem;
+      font-size: 1.3rem;
       font-weight: 300;
       color: #2f2f2f;
   }
@@ -140,7 +148,7 @@ body {
   .dropzone {
       /* width: 100%; */
       position: absolute;
-        text-align: center;
+      text-align: center;
   }
   .upload-info{
     position: absolute;
@@ -157,18 +165,21 @@ body {
       width: 100%;
       height: 10rem;
       opacity: 0;
+      font-size: 1rem;
+      font-family: Adamina;
+  
   }
   
   .btn {
       /* width: 5rem; */
       height: 40px;
-      background: darkmagenta;
+      background: #8b008b;
       color: #fff;
       border-radius: 15px;
       border: 0;
       box-shadow: 0 3px 0 0 hotpink;
       transition: all 0.3s ease-in-out;
-      font-size: 14px;
+      font-size: 1rem;
   }
   
   .btn:hover {
@@ -180,36 +191,11 @@ body {
   /* for project list */
 
   .list-group {
-    /* display: flex; */
     width: 80%;
-    /* max-width: 460px; */
-    /* margin-inline: 1.5rem; */
   }
   .list-group-item {
     cursor: pointer;
-    /* width: 60%; */
-    /* font-size: 2rem ; */
   }
-/* for three dots */
-
-  /* .dotbtn {
-    position: absolute;
-    left: 98%;
-    transform: translate(5%, -140%);
-    width: 30px ;
-    height: 30px ;
-    padding: 0 ;
-    border: none ;
-    background-color: transparent;
-}
-.dropdown-menu {
-    min-width: 100px ;
-}
-
-.dropdown-item {
-    padding: 0px 5px ;
-    font-size: 12px ;
-}*/
 .bar{
   position: absolute;
   top: 90%;
@@ -224,7 +210,6 @@ a{
 
 .accordion-header, .accordion-item,.accordion-button, .card, .list-group-item{
   border-radius: 15px !important;
-  /* border-color: #e541933c; */
 }
 
 .trashBtn{
@@ -233,19 +218,14 @@ a{
   transform: translate(5%, -140%);
   width: 15px ;
   height: 20px ;
-  /* padding: 0 ; */
-  /* border: none ; */
-  /* background-color: transparent; */
 }
 
 .meeting_link{
   width: 100%;
-  /* padding: 0px 20px 0px 20px */
-  /* display: flex; */
 }
 
 .project_name{
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .visible {

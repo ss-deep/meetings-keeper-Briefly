@@ -41,7 +41,7 @@
                 <div class="accordion-item ">
                     <p class="accordion-header ">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ project.project_name | replace(' ', '_') }}">
-                            <div class="fw-bolder fs-6">{{ project.project_name | capitalize }}</div> 
+                            <div class="fw-bolder fs-5">{{ project.project_name | capitalize }}</div> 
                             <span class="ms-5 pb-1" data-bs-toggle="modal" data-bs-target="#updateProject{{ project.project_id }}" data-bs-whatever="project" data-feather="edit"></span>
                             <span class="ms-2 pb-1" data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.project_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>
                         </button>
@@ -52,7 +52,7 @@
                             <div class="d-flex">
                                 <span class="d-block text-muted py-2">{{ project.project_description | capitalize }}</span>
                             </div>  
-                            <h6 class="pt-3">{{ project.project_name | capitalize }} Meetings</h6>
+                            <h6 class="pt-3 fw-bolder">{{ project.project_name | capitalize }} Meetings</h6>
                             <div class="card border-0 mx-0">
                                 <div class="card-body">
                                     {% for meeting in project.meetings %}

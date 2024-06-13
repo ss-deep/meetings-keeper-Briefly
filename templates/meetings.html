@@ -5,11 +5,11 @@
 {% block content %}
   <ul class="list-group list-group-flush ">
   {% for meeting in meetings %}
-    <li class="list-group-item d-flex justify-content-between align-items-start my-3 shadow-sm ">
+    <li class="list-group-item d-flex justify-content-between align-items-start my-3 py-4 shadow-sm ">
       <span class="mx-3 mt-1" data-feather="monitor"></span>
       <a class="meeting_link me-auto" href="{{ url_for('summary', meeting_id=meeting.meeting_id) }}">
-      <div class="  ">
-        <div class="fw-bolder fs-6 mb-2">{{meeting.title | capitalize }}</div>
+      <div class=" ">
+        <div class="fw-bolder fs-5 mb-2">{{meeting.title | capitalize }}</div>
         <div class="text-muted project_name">Project Name: {{meeting.project.project_name | capitalize}}</div>
       </div></a>
       <span class="" data-bs-toggle="modal" data-bs-target="#deleteMeeting{{ meeting.meeting_id }}" data-bs-whatever="delete" data-feather="trash-2"></span>

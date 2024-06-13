@@ -7,7 +7,7 @@
         {{form.hidden_tag()}}
         {{form.csrf_token()}}
         <div class="select_project">
-            {{form.project_selection.label(class="form-label")}}
+            {{form.project_selection.label(class="form-label select_label")}}
             {{form.project_selection(class="form-select")}}
     </div>
     <div class="frame">
@@ -16,7 +16,7 @@
             <div class="dropzone">
                 <div class="upload-info">
                     <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                    <h1 class="mt-1">Click to upload a 'mp4', 'mov', 'avi', 'mp3', 'wav' file</h1>
+                    <p class="mt-1">Click to upload a 'mp4', 'mov', 'avi', 'mp3', 'wav' file</p>
                 </div>
                 {{form.file(class="upload-input")}}
                 {{form.submit(class="btn px-4")}}
