@@ -41,14 +41,14 @@ def allowed_file(filename):
 def home():
     if current_user.is_active:
         print(f"log in : {current_user.email}")
-        return render_template('base.html')
+        return redirect(url_for('projects'))
     else:
         form = LoginForm()
         if form.validate_on_submit():
             user = get_user(form.email.data)
             if user and user.check_password(form.password.data):
                 login_user(user)
-                return render_template('base.html')
+                return redirect(url_for('projects'))
             else:
                 flash('Invalid email or password.', 'danger')
         return render_template('login.html', form=form)
@@ -77,10 +77,10 @@ def register():
         return render_template('register.html', form=form)
     
 
-@app.route("/base")
-@login_required
-def base():
-    return render_template('base.html')
+# @app.route("/base")
+# @login_required
+# def base():
+#     return render_template('base.html')
 
 ####################################################################
 ###############   View function to Upload a file   #################
@@ -163,13 +163,6 @@ def delete_meeting(meeting_id):
     delete_a_meeting(meeting_id)
     flash('Meeting Deleted', 'danger')
     return render_template("meetings.html", meetings=get_meetings())
-
-# @app.route('/add_project/<meeting_id>', methods=["POST"])
-# @login_required
-# def add_project_to_meeting(meeting_id):
-#     meeting=get_a_meeting(meeting_id)
-#     print(f"options--------{request.form.get('options')}")
-#     pass
 
 @app.route('/change_project/<int:meeting_id>', methods=['POST'])
 def change_project(meeting_id):

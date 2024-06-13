@@ -30,12 +30,6 @@
         <div class="position-sticky pt-5">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link {% if request.endpoint == 'base' %}active{% endif %}" aria-current="page" href="{{url_for('base')}}">
-                <span data-feather="home"></span>
-                Dashboard
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link {% if request.endpoint == 'projects' %}active{% endif %}" href="{{ url_for('projects')}}">
                 <span data-feather="file"></span>
                 Project
