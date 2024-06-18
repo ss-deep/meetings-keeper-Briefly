@@ -2,6 +2,10 @@
 {% extends "base.html" %}
 {% block title %}Meeting{% endblock %}
 {% block heading %}My Meetings{% endblock %}
+{% block my_buttons %}
+    <input type="text" class="px-4 mx-2 form-control" placeholder="Search...">
+    </input>
+{% endblock %}
 {% block content %}
   <ul class="list-group list-group-flush ">
   {% for meeting in meetings %}

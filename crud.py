@@ -1,4 +1,4 @@
-from model import db, User, Project, Meeting, UserMeeting
+from model import db, User, Project, Meeting
 
 
 ###############   User   #################
@@ -21,14 +21,14 @@ def delete_user(email):
 
 ###############   Projects   #################
 
-def create_project(project_name,project_description):
-    project=Project(project_name=project_name,project_description=project_description)
+def create_project(project_name,project_description,user_id):
+    project=Project(project_name=project_name,project_description=project_description, user_id=user_id)
     db.session.add(project)
     db.session.commit()
     return project
 
-def get_projects():
-    projects=Project.query.all()
+def get_projects(user_id):
+    projects=Project.query.filter_by(user_id=user_id).all()
     return projects
 
 def delete_a_project(project_id):
@@ -53,9 +53,14 @@ def create_meeting(title,brief_summary,detail_summary,project_id):
     db.session.commit()
     return meeting
 
-def get_meetings():
-    meeting=Meeting.query.all()
-    return meeting
+def get_meetings(user_id):
+    meetings=[]
+    projects=get_projects(user_id)
+    print(projects)
+    for project in projects:
+        print(project)
+        meetings.extend(Meeting.query.filter_by(project_id=project.project_id).all())
+    return meetings
 
 def get_a_meeting(meeting_id):
     return Meeting.query.get(meeting_id)
@@ -78,3 +83,14 @@ def delete_a_meeting(meeting_id):
     db.session.commit()
     # return meeting
 
+def add_default_project(user_id):
+    project=Project(project_name="Other",project_description="All the other meeting goes here.", user_id=user_id)
+    db.session.add(project)
+    db.session.commit()
+    return project
+
+# def create_user_project(user_id, project_id):
+#     up=UserProject(user_id=user_id,project_id=project_id)
+#     db.session.add(up)
+#     db.session.commit()
+#     return up

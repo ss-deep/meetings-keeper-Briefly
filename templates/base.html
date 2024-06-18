@@ -38,15 +38,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% if request.endpoint == 'meetings' %}active{% endif %}" href="{{ url_for('meetings')}}">
-                <span data-feather="users"></span>
-                Meetings
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link {% if request.endpoint == 'upload_file' %}active{% endif %}" href="{{ url_for('upload_file')}}">
                 <span data-feather="upload"></span>
                 Upload
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'meetings' %}active{% endif %}" href="{{ url_for('meetings')}}">
+                <span data-feather="users"></span>
+                Meetings
               </a>
             </li>
             <hr class="m-3 bg-light">

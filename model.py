@@ -49,54 +49,53 @@ class Project(db.Model):
     __tablename__ = "projects"
     
     project_id = db.Column(db.Integer, primary_key=True)
-    project_name = db.Column(db.String, nullable=False, unique=True)
-    project_description = db.Column(db.String, nullable=True)
+    project_name = db.Column(db.String, nullable=False)
+    project_description = db.Column(db.Text, nullable=True)
 
-    def __init__(self, project_name, project_description=None):
-        self.project_name = project_name
-        self.project_description = project_description
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user = db.relationship("User", backref="projects")
+
+    # def __init__(self, project_name, project_description=None):
+    #     self.project_name = project_name
+    #     self.project_description = project_description
         
     def __repr__(self):
         return f"<Project project_id={self.project_id} project_name={self.project_name}>"
     
-    def add_default_project(self):
-        self.project_name="Other"
-
 class Meeting(db.Model):
     __tablename__ = "meetings"
     
     meeting_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False, unique=True)
-    # action_item = db.Column(db.Text)
+    title = db.Column(db.String, nullable=False)
     brief_summary = db.Column(db.Text)
     detail_summary = db.Column(db.Text)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
 
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
     project = db.relationship("Project", backref="meetings")
 
     def __repr__(self):
         return f"<Meeting meeting_id={self.meeting_id} title={self.title}>"
 
 
-class UserMeeting(db.Model):
-    __tablename__ = "user_meetings"
+# class UserProject(db.Model):
+#     __tablename__ = "user_projects"
     
-    user_meetings_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    meeting_id = db.Column(db.Integer, db.ForeignKey("meetings.meeting_id"))
+#     user_projects_id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
 
-    user = db.relationship("User", backref="usermeetings")
-    meeting = db.relationship("Meeting", backref="usermeetings")
+#     user = db.relationship("User", backref="user_projects")
+#     project = db.relationship("Project", backref="user_projects")
 
-    def __repr__(self):
-        return f"<UserMeeting user_id={self.user_id} meeting_id={self.meeting_id}>"
+#     def __repr__(self):
+#         return f"<UserProject user_id={self.user_id} project_id={self.project_id}>"
 
 if __name__ == "__main__":
     from app import app
     connect_to_db(app)
     with app.app_context():
         db.create_all()
-        project=Project("Other")
-        db.session.add(project)
-        db.session.commit()
+        # project=Project("Other")
+        # db.session.add(project)
+        # db.session.commit()
 
