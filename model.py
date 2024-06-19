@@ -1,8 +1,9 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from dotenv import load_dotenv
+import bcrypt
 
 # load .env file to environment
 load_dotenv()
@@ -28,18 +29,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=False)
 
-    def __init__(self,  email, username, password):
+    def __init__(self, email, username, password):
         self.email = email
         self.username = username
-        self.password_hash = generate_password_hash(password)
-        
-    def get_id(self):
-        #Return the unique identifier for the user.
-        return str(self.user_id)
+        self.set_password(password)
+
+    def set_password(self, password):
+        # Hash the password, then decode it (is used to convert from binary to string) and store it in password_hash
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     def check_password(self, password):
-        #Check if the provided password matches the stored password hash
-        return check_password_hash(self.password_hash, password)
+        # Check if the provided password matches the stored password_hash
+        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))      
+      
+    def get_id(self):
+        return str(self.user_id)
 
     def __repr__(self)  :
         return f"<User username={self.username}>"
@@ -55,10 +59,6 @@ class Project(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     user = db.relationship("User", backref="projects")
 
-    # def __init__(self, project_name, project_description=None):
-    #     self.project_name = project_name
-    #     self.project_description = project_description
-        
     def __repr__(self):
         return f"<Project project_id={self.project_id} project_name={self.project_name}>"
     
@@ -77,25 +77,10 @@ class Meeting(db.Model):
         return f"<Meeting meeting_id={self.meeting_id} title={self.title}>"
 
 
-# class UserProject(db.Model):
-#     __tablename__ = "user_projects"
-    
-#     user_projects_id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
-
-#     user = db.relationship("User", backref="user_projects")
-#     project = db.relationship("Project", backref="user_projects")
-
-#     def __repr__(self):
-#         return f"<UserProject user_id={self.user_id} project_id={self.project_id}>"
-
 if __name__ == "__main__":
     from app import app
     connect_to_db(app)
     with app.app_context():
+        db.drop_all()
         db.create_all()
-        # project=Project("Other")
-        # db.session.add(project)
-        # db.session.commit()
 
